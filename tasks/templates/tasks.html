@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">            
+            <h1><i class="fa-solid fa-list-check"></i> Tasks</h1>            
+            <ul class="list-group">
+                {% for task in tasks %}
+                    <a class="list-group-item" href="{% url 'task_detail' task.id %}">  
+                        <header class="d-flex justify-content-between row">
+                            <strong>{{task.id}} - {{task.title}}</strong>
+                        </header>    
+                        <section class="d-flex justify-content-between container">
+                            <p>{{task.description}}</p>                            
+                        </section>
+                        <div class="content d-inline-flex p-2 bd-highlight">
+                            {% if task.important %}
+                                <span class="badge bg-info text-light ">Importante</span>                            
+                            {% else %}
+                                <span class="badge bg-warning text-light">No Importante</span>
+                            {% endif %}
+                        </div>                                       
+                        
+                        <div class="toast-container d-flex flex-row-reverse bd-highlight">
+                            <div class="toast-header p-2 bd-highlight">
+                                <small class="text-muted">by <strong>{{task.user.username}}</strong> at {{task.created}}</small >
+                            </div>
+                        </div>                        
+                        {% if task.datecompleted != null %}
+                            <div class="toast-container d-flex flex-row-reverse bd-highlight">
+                                <div class="toast-header p-2 bd-highlight">
+                                    <small class="text-muted">Completed at {{task.datecompleted}}</small >
+                                </div>
+                            </div>                            
+                        {% endif %}                                    
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
